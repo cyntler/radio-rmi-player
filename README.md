@@ -1,3 +1,3 @@
-# radio-rmi-listen
+# radio-rmi-player
 
-Website for Radio RMI.
+Website with a RMI Radio player.
