@@ -1,6 +1,6 @@
 # radio-rmi-player
 
-Website with a RMI Radio player.
+Website with a Radio RMI player.
 
 ## UI Design
 
