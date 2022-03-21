@@ -6,10 +6,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html,
-  body {
+  body,
+  main {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
 
   body {
