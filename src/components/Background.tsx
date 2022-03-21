@@ -7,8 +7,7 @@ const BackgroundImage = styled.div`
   height: 100vh;
   background-image: url('src/assets/background.jpg');
   background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
+  background-size: 105% auto;
   z-index: -1;
 `;
 
