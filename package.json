@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@cyntler/eslint-config": "^0.0.2",
     "@rushstack/eslint-patch": "^1.1.1",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
+    "@types/styled-components": "^5.1.24",
     "@vitejs/plugin-react": "^1.0.7",
     "eslint": "^8.11.0",
     "prettier": "^2.6.0",
