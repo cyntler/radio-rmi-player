@@ -1,5 +1,6 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { Wave } from '@foobar404/wave';
 
 import { useAudioStream } from '../hooks/useAudioStream';
 import { useGlobalState } from '../hooks/useGlobalState';
@@ -13,8 +14,8 @@ const PlayerContainer = styled.div`
 
 const PlayerCoverContainer = styled.div`
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
 `;
 
@@ -27,7 +28,7 @@ const PlayerCover = styled.img`
   box-shadow: 4px 4px 9px 3px rgba(0, 0, 0, 0.25);
 `;
 
-const PlayButton = styled.button`
+const PlayerPlayButton = styled.button`
   position: absolute;
   width: 76px;
   height: 91px;
@@ -50,15 +51,44 @@ const PlayButton = styled.button`
 `;
 
 const PlayerSongName = styled.p`
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   color: #ffffff;
-  font-size: 50px;
+  font-size: 1rem;
+`;
+
+const PlayerWaveCanvas = styled.canvas`
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  left: 0;
+  bottom: 0;
 `;
 
 export const Player: FunctionComponent = () => {
   const { listenUrl, song } = useNowPlayingSocket();
   const [isPlaying] = useGlobalState('isPlaying');
-  const { play } = useAudioStream(listenUrl);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { play, audioRef } = useAudioStream(listenUrl);
+
+  useEffect(() => {
+    if (audioRef.current && canvasRef.current) {
+      console.log(1);
+      const wave = new Wave(audioRef.current, canvasRef.current);
+
+      canvasRef.current.width = canvasRef.current.offsetWidth;
+      canvasRef.current.height = canvasRef.current.offsetHeight;
+
+      console.log(canvasRef.current.width, canvasRef.current.height);
+
+      wave.addAnimation(
+        new wave.animations.Wave({
+          lineWidth: 10,
+          lineColor: 'red',
+          count: 20,
+        })
+      );
+    }
+  }, [audioRef, canvasRef]);
 
   if (!listenUrl || !song) {
     return null;
@@ -70,7 +100,11 @@ export const Player: FunctionComponent = () => {
     <PlayerContainer>
       <PlayerCoverContainer>
         <PlayerCover src={song.coverUrl} />
-        {!isPlaying && <PlayButton onClick={play} />}
+        {!isPlaying ? (
+          <PlayerPlayButton onClick={play} />
+        ) : (
+          <PlayerWaveCanvas ref={canvasRef} />
+        )}
       </PlayerCoverContainer>
       <PlayerSongName>
         {artist} - {title}

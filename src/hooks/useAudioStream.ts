@@ -35,6 +35,7 @@ export const useAudioStream = (listenUrl: string) => {
   };
 
   return {
+    audioRef,
     isPlaying,
     stop,
     play,

@@ -9,7 +9,8 @@ const BackgroundImage = styled.div`
   height: 100vh;
   background-image: url('${assets.background}');
   background-position: center;
-  background-size: 105% auto;
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: -1;
 `;
 

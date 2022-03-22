@@ -7,15 +7,28 @@ import { logoRotationAnim } from '../utils/animations';
 
 const LogoLink = styled.a`
   position: absolute;
+  width: 120px;
+  height: 120px;
   top: 20px;
   left: 20px;
   overflow: hidden;
+  z-index: 100;
+
+  @media (max-width: 600px) {
+    left: 50%;
+    margin-left: -30px;
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const LogoImage = styled.img<{ isRotation: boolean }>`
   border: 0;
   border-radius: 50%;
   display: inline-block;
+  width: 100%;
+  height: 100%;
+
   ${({ isRotation }) =>
     isRotation &&
     css`
@@ -30,12 +43,7 @@ export const Logo: FunctionComponent = () => {
 
   return (
     <LogoLink href="/">
-      <LogoImage
-        src={assets.logo}
-        alt="Radio RMI"
-        width={120}
-        isRotation={isPlaying}
-      />
+      <LogoImage src={assets.logo} alt="Radio RMI" isRotation={isPlaying} />
     </LogoLink>
   );
 };
