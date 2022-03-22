@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Wave } from '@foobar404/wave';
 
@@ -54,41 +54,49 @@ const PlayerSongName = styled.p`
   margin: 20px 0 0 0;
   color: #ffffff;
   font-size: 1rem;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const PlayerWaveCanvas = styled.canvas`
   position: absolute;
   width: 100%;
-  height: 50%;
+  height: 100%;
   left: 0;
   bottom: 0;
+  opacity: 0.3;
 `;
 
 export const Player: FunctionComponent = () => {
   const { listenUrl, song } = useNowPlayingSocket();
   const [isPlaying] = useGlobalState('isPlaying');
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [wave, setWave] = useState<Wave | undefined>();
   const { play, audioRef } = useAudioStream(listenUrl);
 
   useEffect(() => {
-    if (audioRef.current && canvasRef.current) {
-      console.log(1);
-      const wave = new Wave(audioRef.current, canvasRef.current);
-
+    if (audioRef && canvasRef.current && !wave) {
       canvasRef.current.width = canvasRef.current.offsetWidth;
       canvasRef.current.height = canvasRef.current.offsetHeight;
 
-      console.log(canvasRef.current.width, canvasRef.current.height);
+      const w = new Wave(audioRef, canvasRef.current);
 
-      wave.addAnimation(
-        new wave.animations.Wave({
-          lineWidth: 10,
-          lineColor: 'red',
-          count: 20,
+      w.addAnimation(
+        new w.animations.Lines({
+          count: 30,
+          lineColor: '#ffffff',
+          lineWidth: 3,
+          rounded: true,
         })
       );
+      setWave(w);
     }
-  }, [audioRef, canvasRef]);
+  }, [audioRef, wave]);
+
+  useEffect(() => {
+    if (!isPlaying && wave) {
+      wave.clearAnimations();
+    }
+  }, [isPlaying, wave]);
 
   if (!listenUrl || !song) {
     return null;

@@ -1,34 +1,36 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 
 import { useGlobalState } from './useGlobalState';
 
 export const useAudioStream = (listenUrl: string) => {
-  const audioRef = useRef<HTMLAudioElement | undefined>();
-  const [isPlaying, setIsPlaying] = useGlobalState('isPlaying');
+  const [audioRef, setAudioRef] = useState<HTMLAudioElement | undefined>();
+  const [, setIsPlaying] = useGlobalState('isPlaying');
 
   const createAudioElement = () => {
-    audioRef.current = new Audio(`${listenUrl}?now=${Date.now()}`);
-    audioRef.current.autoplay = false;
-    audioRef.current.controls = false;
-    audioRef.current.preload = 'auto';
+    const audio = new Audio(`${listenUrl}?now=${Date.now()}`);
+    audio.autoplay = false;
+    audio.controls = false;
+    audio.preload = 'auto';
+    audio.crossOrigin = 'anonymous';
 
-    return audioRef.current;
+    setAudioRef(audio);
+    return audio;
   };
 
   const stop = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = '';
-      audioRef.current.load();
-      audioRef.current.remove();
-      audioRef.current = undefined;
+    if (audioRef) {
+      audioRef.pause();
+      audioRef.src = '';
+      audioRef.load();
+      audioRef.remove();
 
+      setAudioRef(undefined);
       setIsPlaying(false);
     }
   };
 
   const play = () => {
-    const ref = audioRef.current ?? createAudioElement();
+    const ref = audioRef ?? createAudioElement();
 
     ref.play();
     setIsPlaying(true);
@@ -36,7 +38,6 @@ export const useAudioStream = (listenUrl: string) => {
 
   return {
     audioRef,
-    isPlaying,
     stop,
     play,
   };
