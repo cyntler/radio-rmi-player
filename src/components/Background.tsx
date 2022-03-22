@@ -1,11 +1,13 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
+import { assets } from '../models';
+
 const BackgroundImage = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-image: url('src/assets/background.jpg');
+  background-image: url('${assets.background}');
   background-position: center;
   background-size: 105% auto;
   z-index: -1;
@@ -14,7 +16,7 @@ const BackgroundImage = styled.div`
 const BackgroundOverlay = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(46, 16, 16, 0.2);
 `;
 
 export const Background: FunctionComponent = () => (
