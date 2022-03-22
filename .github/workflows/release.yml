@@ -20,7 +20,7 @@ jobs:
         run: npm i
       - name: Build app
         run: npm run build
-      - name: copy file via ssh password
+      - name: Copy app to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
