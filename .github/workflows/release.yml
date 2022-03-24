@@ -26,6 +26,6 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
-          source: 'dist/*'
+          source: 'dist'
           target: '~/radio-rmi-player'
           rm: true
