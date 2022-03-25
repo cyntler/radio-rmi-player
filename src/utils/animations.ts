@@ -5,7 +5,7 @@ export const logoRotationAnim = keyframes`
     transform: rotate(0deg);
   }
 
-  99% {
+  95% {
     transform: rotate(0deg);
   }
 
