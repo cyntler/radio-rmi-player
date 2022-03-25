@@ -16,9 +16,16 @@ const LogoLink = styled.a`
 
   @media (max-width: 600px) {
     left: 50%;
-    margin-left: -30px;
-    width: 60px;
-    height: 60px;
+    margin-left: -45px;
+    width: 90px;
+    height: 90px;
+  }
+
+  @media (max-width: 320px) {
+    left: 50%;
+    margin-left: -35px;
+    width: 70px;
+    height: 70px;
   }
 `;
 
@@ -33,7 +40,7 @@ const LogoImage = styled.img<{ isRotation: boolean }>`
     isRotation &&
     css`
       animation-name: ${logoRotationAnim};
-      animation-duration: 60s;
+      animation-duration: 30s;
       animation-iteration-count: infinite;
     `}
 `;
