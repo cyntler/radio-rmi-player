@@ -8,11 +8,14 @@ export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return {
+    build: {
+      assetsInlineLimit: 0,
+    },
     plugins: [
       react(),
       createHtmlPlugin({
         minify: true,
-        entry: './src/index.tsx',
+        entry: '/src/index.tsx',
         inject: {
           data: {
             version,
