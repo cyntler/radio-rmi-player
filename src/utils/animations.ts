@@ -1,6 +1,6 @@
 import { keyframes } from 'styled-components';
 
-export const logoRotationAnim = keyframes`
+export const logoRotationAnimation = keyframes`
   0% {
     transform: rotate(0deg);
   }

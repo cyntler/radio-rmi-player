@@ -1,11 +1,8 @@
-import { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 
-import { useGlobalState } from '../hooks/useGlobalState';
-import { assets } from '../models';
-import { logoRotationAnim } from '../utils/animations';
+import { logoRotationAnimation } from '../../utils/animations';
 
-const LogoLink = styled.a`
+export const LogoLink = styled.a`
   position: absolute;
   width: 120px;
   height: 120px;
@@ -29,7 +26,7 @@ const LogoLink = styled.a`
   }
 `;
 
-const LogoImage = styled.img<{ isRotation: boolean }>`
+export const LogoImage = styled.img<{ isRotation: boolean }>`
   border: 0;
   border-radius: 50%;
   display: inline-block;
@@ -39,18 +36,8 @@ const LogoImage = styled.img<{ isRotation: boolean }>`
   ${({ isRotation }) =>
     isRotation &&
     css`
-      animation-name: ${logoRotationAnim};
+      animation-name: ${logoRotationAnimation};
       animation-duration: 30s;
       animation-iteration-count: infinite;
     `}
 `;
-
-export const Logo: FunctionComponent = () => {
-  const [isPlaying] = useGlobalState('isPlaying');
-
-  return (
-    <LogoLink href="/">
-      <LogoImage src={assets.logo} alt="Radio RMI" isRotation={isPlaying} />
-    </LogoLink>
-  );
-};
