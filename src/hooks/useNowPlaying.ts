@@ -11,13 +11,13 @@ export const useNowPlaying = () => {
   const [song, setSong] = useState<Song | undefined>();
 
   const setDataFromApi = ({
-    station: { listen_url: listenUrl, description },
+    station: { listen_url: apiListenUrl, description: apiDescription },
     now_playing: {
       song: { artist, title, art: coverUrl },
     },
   }: ApiResponse) => {
-    setListenUrl(listenUrl);
-    setDescription(description);
+    setListenUrl(apiListenUrl);
+    setDescription(apiDescription);
     setSong({
       artist,
       title,
