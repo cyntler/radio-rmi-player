@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - '*'
+      - '!v*.*.*'
 
 jobs:
   main:
