@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
           short_name: process.env.VITE_APP_NAME,
           description: process.env.VITE_APP_DESCRIPTION,
           theme_color: '#ffffff',
+          display: 'fullscreen',
           icons: [
             {
               src: 'pwa-192x192.png',
