@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { useGlobalState } from './useGlobalState';
-
-export const useAudioStream = (listenUrl: string) => {
+export const useAudioStream = (
+  listenUrl: string,
+  onPlay: (status: boolean) => void
+) => {
   const [audioRef, setAudioRef] = useState<HTMLAudioElement | undefined>();
-  const [, setIsPlaying] = useGlobalState('isPlaying');
 
   const createAudioElement = () => {
     const audio = new Audio(`${listenUrl}?now=${Date.now()}`);
@@ -25,7 +25,7 @@ export const useAudioStream = (listenUrl: string) => {
       audioRef.remove();
 
       setAudioRef(undefined);
-      setIsPlaying(false);
+      onPlay(false);
     }
   };
 
@@ -33,7 +33,7 @@ export const useAudioStream = (listenUrl: string) => {
     const ref = audioRef ?? createAudioElement();
 
     ref.play();
-    setIsPlaying(true);
+    onPlay(true);
   };
 
   return {

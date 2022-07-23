@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 
-import { useGlobalState } from '../../hooks/useGlobalState';
+import { stationContext } from '../../contexts/stationContext';
 import { assets } from '../../models';
 import { LogoImage, LogoLink } from './Logo.style';
 
 export const Logo: FunctionComponent = () => {
-  const [isPlaying] = useGlobalState('isPlaying');
+  const { isPlaying } = useContext(stationContext);
 
   return (
     <LogoLink href="/">

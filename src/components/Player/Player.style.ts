@@ -12,6 +12,11 @@ export const PlayerCoverContainer = styled.div`
   width: 300px;
   height: 300px;
   margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
 
   @media (max-width: 600px) {
     width: 250px;
@@ -23,8 +28,8 @@ export const PlayerCover = styled.img`
   display: inline-block;
   user-select: none;
   -webkit-user-drag: none;
-  width: 100%;
-  height: 100%;
+  width: 101%;
+  height: 101%;
   box-shadow: 4px 4px 9px 3px rgba(0, 0, 0, 0.25);
 `;
 
@@ -42,7 +47,7 @@ export const PlayerPlayButton = styled.button`
   transform: translate(-50%, -50%);
   border: 0;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.8;
   transition: opacity 0.3s ease;
 
   &:hover {
