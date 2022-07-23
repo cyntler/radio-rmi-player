@@ -1,6 +1,7 @@
 import {
   FunctionComponent,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -8,9 +9,6 @@ import {
 import { Wave } from '@foobar404/wave';
 import Ticker from 'react-ticker';
 
-import { useAudioStream } from '../../hooks/useAudioStream';
-import { useGlobalState } from '../../hooks/useGlobalState';
-import { useNowPlaying } from '../../hooks/useNowPlaying';
 import {
   PlayerContainer,
   PlayerCover,
@@ -21,13 +19,14 @@ import {
   PlayerWaveCanvas,
 } from './Player.style';
 import { updateTitlePrefix } from '../../utils/updateDocumentTitle';
+import { stationContext } from '../../contexts/stationContext';
 
 export const Player: FunctionComponent = () => {
-  const { listenUrl, song, description } = useNowPlaying();
-  const [isPlaying] = useGlobalState('isPlaying');
+  const { listenUrl, isPlaying, playStation, song, description, audioRef } =
+    useContext(stationContext);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [wave, setWave] = useState<Wave | undefined>();
-  const { play, audioRef } = useAudioStream(listenUrl);
+
   const [isMarqueePlay, setIsMarqueePlay] = useState(true);
 
   const handleMarqueeComplete = useCallback(() => {
@@ -83,7 +82,7 @@ export const Player: FunctionComponent = () => {
       <PlayerCoverContainer>
         <PlayerCover src={coverUrl} />
         {!isPlaying ? (
-          <PlayerPlayButton onClick={play} />
+          <PlayerPlayButton onClick={playStation} />
         ) : (
           <PlayerWaveCanvas ref={canvasRef} />
         )}
