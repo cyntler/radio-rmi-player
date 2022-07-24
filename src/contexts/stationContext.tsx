@@ -10,7 +10,7 @@ const { Provider } = stationContext;
 
 export const StationContextProvider: FunctionComponent = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { listenUrl, song, description } = useNowPlaying();
+  const { listenUrl, description, song, nextSong } = useNowPlaying();
   const { play: playStation, audioRef } = useAudioStream(
     listenUrl,
     (status) => {
@@ -20,7 +20,15 @@ export const StationContextProvider: FunctionComponent = ({ children }) => {
 
   return (
     <Provider
-      value={{ listenUrl, song, description, isPlaying, playStation, audioRef }}
+      value={{
+        listenUrl,
+        song,
+        nextSong,
+        description,
+        isPlaying,
+        playStation,
+        audioRef,
+      }}
     >
       {children}
     </Provider>

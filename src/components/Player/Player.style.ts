@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { assets } from '../../models';
 
@@ -17,6 +17,7 @@ export const PlayerCoverContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 15px;
+  perspective: 1000px;
 
   @media (max-width: 600px) {
     width: 250px;
@@ -24,13 +25,37 @@ export const PlayerCoverContainer = styled.div`
   }
 `;
 
-export const PlayerCover = styled.img`
+export const PlayerCoverInner = styled.div<{ isNextSongCoverActive: boolean }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+
+  ${({ isNextSongCoverActive }) =>
+    isNextSongCoverActive &&
+    css`
+      transform: rotateY(180deg);
+    `}
+`;
+
+export const PlayerCoverImage = styled.img`
   display: inline-block;
   user-select: none;
   -webkit-user-drag: none;
-  width: 101%;
-  height: 101%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   box-shadow: 4px 4px 9px 3px rgba(0, 0, 0, 0.25);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  left: 0;
+  top: 0;
+
+  &:nth-child(2) {
+    transform: rotateY(180deg);
+  }
 `;
 
 export const PlayerPlayButton = styled.button`
@@ -55,8 +80,17 @@ export const PlayerPlayButton = styled.button`
   }
 `;
 
+export const PlayerHeadingText = styled.p`
+  margin: 1rem 0 0 0;
+  color: #ffffff;
+  font-size: 0.4rem;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
+  font-weight: 500;
+`;
+
 export const PlayerSongName = styled.p`
-  margin: 20px 0 0 0;
+  margin: 0.25rem 0 0 0;
   color: #ffffff;
   font-size: 1rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -69,16 +103,4 @@ export const PlayerWaveCanvas = styled.canvas`
   left: 0;
   bottom: 0;
   opacity: 0.3;
-`;
-
-export const PlayerDescription = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  font-size: 15px;
-  color: #ffffff;
-  font-weight: bold;
-  padding: 15px 0;
-  letter-spacing: 3px;
 `;

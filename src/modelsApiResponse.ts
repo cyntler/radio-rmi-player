@@ -1,6 +1,7 @@
 export interface ApiResponse {
   station: ApiResponseStation;
-  now_playing: ApiResponseNowPlaying;
+  now_playing: ApiResponsePlaying;
+  playing_next?: ApiResponsePlaying;
 }
 
 export interface ApiResponseStation {
@@ -8,11 +9,11 @@ export interface ApiResponseStation {
   description: string;
 }
 
-export interface ApiResponseNowPlaying {
-  song: ApiResponseNowPlayingSong;
+export interface ApiResponsePlaying {
+  song: ApiResponsePlayingSong;
 }
 
-export interface ApiResponseNowPlayingSong {
+export interface ApiResponsePlayingSong {
   artist: string;
   title: string;
   art: string;
