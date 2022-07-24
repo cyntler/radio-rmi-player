@@ -9,20 +9,36 @@ export const useNowPlaying = () => {
   const [listenUrl, setListenUrl] = useState('');
   const [description, setDescription] = useState('');
   const [song, setSong] = useState<Song | undefined>();
+  const [nextSong, setNextSong] = useState<Song | undefined>();
 
   const setDataFromApi = ({
     station: { listen_url: apiListenUrl, description: apiDescription },
-    now_playing: {
-      song: { artist, title, art: coverUrl },
-    },
+    now_playing: { song: currentSong },
+    playing_next,
   }: ApiResponse) => {
     setListenUrl(apiListenUrl);
     setDescription(apiDescription);
-    setSong({
-      artist,
-      title,
-      coverUrl,
-    });
+
+    const songData = {
+      artist: currentSong.artist,
+      title: currentSong.title,
+      coverUrl: currentSong.art,
+    };
+
+    if (JSON.stringify(song) !== JSON.stringify(songData)) {
+      setSong(songData);
+    }
+
+    if (playing_next && playing_next.song) {
+      const nextSongData = {
+        artist: playing_next.song.artist,
+        title: playing_next.song.title,
+        coverUrl: playing_next.song.art,
+      };
+
+      if (JSON.stringify(nextSong) !== JSON.stringify(nextSongData))
+        setNextSong(nextSongData);
+    }
   };
 
   const fetchInitialData = useCallback(async () => {
@@ -32,6 +48,7 @@ export const useNowPlaying = () => {
     if (jsonData) {
       setDataFromApi(jsonData as ApiResponse);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -42,11 +59,13 @@ export const useNowPlaying = () => {
     if (lastJsonMessage) {
       setDataFromApi(lastJsonMessage as ApiResponse);
     }
+    // eslint-disable-next-line
   }, [lastJsonMessage]);
 
   return {
     listenUrl,
-    song,
     description,
+    song,
+    nextSong,
   };
 };
