@@ -5,6 +5,7 @@ import { assets } from '../../models';
 export const PlayerContainer = styled.div`
   text-align: center;
   padding: 20px;
+  width: 100%;
 `;
 
 export const PlayerCoverContainer = styled.div`
@@ -94,13 +95,24 @@ export const PlayerSongName = styled.p`
   color: #ffffff;
   font-size: 1rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export const PlayerWaveCanvas = styled.canvas`
+export const PlayerWaveCanvas = styled.canvas<{ isVisible: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
   left: 0;
   bottom: 0;
-  opacity: 0.3;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      opacity: 0.3;
+      transition: opacity 0.5s ease 1s;
+    `}
 `;

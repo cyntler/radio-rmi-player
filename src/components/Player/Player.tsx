@@ -47,7 +47,7 @@ export const Player: FunctionComponent = () => {
         {!isPlaying ? (
           <PlayerPlayButton onClick={playStation} />
         ) : (
-          <PlayerWaveCanvas ref={canvasRef} />
+          <PlayerWaveCanvas ref={canvasRef} isVisible={!isNextSongShown} />
         )}
       </PlayerCoverContainer>
       <PlayerHeadingText>{heading}</PlayerHeadingText>
