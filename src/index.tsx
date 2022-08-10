@@ -1,13 +1,13 @@
 import { StrictMode } from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
 import { GlobalStyle } from './components/GlobalStyle';
 
-render(
+const root = createRoot(document.querySelector('main')!);
+root.render(
   <StrictMode>
     <GlobalStyle />
     <App />
-  </StrictMode>,
-  document.querySelector('main')
+  </StrictMode>
 );
