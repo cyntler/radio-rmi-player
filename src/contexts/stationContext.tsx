@@ -1,4 +1,9 @@
-import { createContext, FunctionComponent, useState } from 'react';
+import {
+  createContext,
+  FunctionComponent,
+  PropsWithChildren,
+  useState,
+} from 'react';
 import { useAudioStream } from '../hooks/useAudioStream';
 
 import { useNowPlaying } from '../hooks/useNowPlaying';
@@ -8,7 +13,9 @@ export const stationContext = createContext({} as StationContext);
 
 const { Provider } = stationContext;
 
-export const StationContextProvider: FunctionComponent = ({ children }) => {
+export const StationContextProvider: FunctionComponent<PropsWithChildren> = ({
+  children,
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const { listenUrl, description, song, nextSong } = useNowPlaying();
   const { play: playStation, audioRef } = useAudioStream(
