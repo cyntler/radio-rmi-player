@@ -10,8 +10,8 @@ export const PlayerContainer = styled.div`
 
 export const PlayerCoverContainer = styled.div`
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 40vh;
+  height: 40vh;
   margin: 0 auto;
   overflow: hidden;
   display: flex;
@@ -19,11 +19,6 @@ export const PlayerCoverContainer = styled.div`
   justify-content: center;
   border-radius: 15px;
   perspective: 1000px;
-
-  @media (max-width: 600px) {
-    width: 250px;
-    height: 250px;
-  }
 `;
 
 export const PlayerCoverInner = styled.div<{ isNextSongCoverActive: boolean }>`
@@ -61,13 +56,15 @@ export const PlayerCoverImage = styled.img`
 
 export const PlayerPlayButton = styled.button`
   position: absolute;
-  width: 76px;
-  height: 91px;
+  width: 30%;
+  height: 30%;
+  max-width: 76px;
+  max-height: 91px;
   background-color: transparent;
   background-image: url('${assets.play}');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -82,22 +79,21 @@ export const PlayerPlayButton = styled.button`
 `;
 
 export const PlayerHeadingText = styled.p`
-  margin: 1rem 0 0 0;
+  margin: 0.9rem 0 0 0;
   color: #ffffff;
   font-size: 0.4rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-transform: uppercase;
   font-weight: 500;
+  text-align: center;
 `;
 
 export const PlayerSongName = styled.p`
   margin: 0.25rem 0 0 0;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
 `;
 
 export const PlayerWaveCanvas = styled.canvas<{ isVisible: boolean }>`

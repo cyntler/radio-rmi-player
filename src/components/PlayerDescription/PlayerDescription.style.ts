@@ -5,9 +5,9 @@ export const PlayerDescriptionContainer = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  font-size: 15px;
+  font-size: 13px;
   color: #ffffff;
   font-weight: bold;
-  padding: 15px 0;
+  padding: 10px 0;
   letter-spacing: 3px;
 `;
