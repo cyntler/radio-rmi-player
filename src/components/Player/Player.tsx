@@ -1,5 +1,4 @@
 import { FunctionComponent, useContext, useEffect } from 'react';
-import { useWindowBlurChangeTitle } from 'use-window-blur-change-title';
 
 import {
   PlayerContainer,
@@ -22,8 +21,6 @@ export const Player: FunctionComponent = () => {
   const { title, heading, isNextSongShown } = usePlayerSongDetails();
   const { listenUrl, isPlaying, playStation, song, nextSong } =
     useContext(stationContext);
-
-  useWindowBlurChangeTitle(song?.title ? song.title : '');
 
   useEffect(() => {
     if (isPlaying) {

@@ -26,7 +26,6 @@ export const PlayerDescription: FunctionComponent = () => {
           direction="toLeft"
           offset="run-in"
           move={isMarqueePlay}
-          // @ts-ignore
           onFinish={handleMarqueeComplete}
         >
           {() => <p>{description}</p>}
