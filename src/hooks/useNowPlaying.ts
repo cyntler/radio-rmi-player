@@ -5,7 +5,7 @@ import { JSON_API_URL, Song, WEBSOCKET_API_URL } from '../models';
 import { ApiResponse } from '../modelsApiResponse';
 
 export const useNowPlaying = () => {
-  const { lastJsonMessage } = useWebSocket(WEBSOCKET_API_URL);
+  const { lastJsonMessage } = useWebSocket<any>(WEBSOCKET_API_URL);
   const [listenUrl, setListenUrl] = useState('');
   const [description, setDescription] = useState('');
   const [song, setSong] = useState<Song | undefined>();
