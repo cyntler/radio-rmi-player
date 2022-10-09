@@ -86,6 +86,10 @@ export const PlayerHeadingText = styled.p`
   text-transform: uppercase;
   font-weight: 500;
   text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 0.6rem;
+  }
 `;
 
 export const PlayerSongName = styled.p`
@@ -94,6 +98,10 @@ export const PlayerSongName = styled.p`
   font-size: 0.9rem;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export const PlayerWaveCanvas = styled.canvas<{ isVisible: boolean }>`
