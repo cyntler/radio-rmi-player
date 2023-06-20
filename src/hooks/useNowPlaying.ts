@@ -8,16 +8,18 @@ export const useNowPlaying = () => {
   const { lastJsonMessage } = useWebSocket<any>(WEBSOCKET_API_URL);
   const [listenUrl, setListenUrl] = useState('');
   const [description, setDescription] = useState('');
+  const [playlist, setPlaylist] = useState('');
   const [song, setSong] = useState<Song | undefined>();
   const [nextSong, setNextSong] = useState<Song | undefined>();
 
   const setDataFromApi = ({
     station: { listen_url: apiListenUrl, description: apiDescription },
-    now_playing: { song: currentSong },
+    now_playing: { song: currentSong, playlist: currentPlaylist },
     playing_next,
   }: ApiResponse) => {
     setListenUrl(apiListenUrl);
     setDescription(apiDescription);
+    setPlaylist(currentPlaylist);
 
     const songData = {
       artist: currentSong.artist,
@@ -65,6 +67,7 @@ export const useNowPlaying = () => {
   return {
     listenUrl,
     description,
+    playlist,
     song,
     nextSong,
   };

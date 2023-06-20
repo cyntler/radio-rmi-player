@@ -11,6 +11,7 @@ export interface ApiResponseStation {
 
 export interface ApiResponsePlaying {
   song: ApiResponsePlayingSong;
+  playlist: string;
 }
 
 export interface ApiResponsePlayingSong {

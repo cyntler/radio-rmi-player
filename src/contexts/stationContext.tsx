@@ -17,7 +17,7 @@ export const StationContextProvider: FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { listenUrl, description, song, nextSong } = useNowPlaying();
+  const { listenUrl, description, song, nextSong, playlist } = useNowPlaying();
   const { play: playStation, audioRef } = useAudioStream(
     listenUrl,
     (status) => {
@@ -32,6 +32,7 @@ export const StationContextProvider: FunctionComponent<PropsWithChildren> = ({
         song,
         nextSong,
         description,
+        playlist,
         isPlaying,
         playStation,
         audioRef,

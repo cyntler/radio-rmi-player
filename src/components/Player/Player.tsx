@@ -15,12 +15,15 @@ import { stationContext } from '../../contexts/stationContext';
 import { usePlayerWave } from '../../hooks/usePlayerWave';
 import { PlayerDescription } from '../PlayerDescription';
 import { usePlayerSongDetails } from '../../hooks/usePlayerSongDetails';
+import { useCustomPlaylistCover } from '../../hooks/useCustomPlaylistCover';
 
 export const Player: FunctionComponent = () => {
   const { canvasRef } = usePlayerWave();
   const { title, heading, isNextSongShown } = usePlayerSongDetails();
-  const { listenUrl, isPlaying, playStation, song, nextSong } =
+  const { listenUrl, isPlaying, playStation, song, nextSong, playlist } =
     useContext(stationContext);
+
+  const customPlaylistCover = useCustomPlaylistCover(playlist);
 
   useEffect(() => {
     if (isPlaying) {
@@ -35,14 +38,14 @@ export const Player: FunctionComponent = () => {
     return null;
   }
 
-  const { coverUrl } = song;
-
   return (
     <PlayerContainer>
       <PlayerCoverContainer>
         <PlayerCoverInner isNextSongCoverActive={isNextSongShown}>
-          <PlayerCoverImage src={coverUrl} />
-          {nextSong && <PlayerCoverImage src={nextSong.coverUrl} />}
+          <PlayerCoverImage src={customPlaylistCover ?? song.coverUrl} />
+          {!customPlaylistCover && nextSong && (
+            <PlayerCoverImage src={nextSong.coverUrl} />
+          )}
         </PlayerCoverInner>
         {!isPlaying ? (
           <PlayerPlayButton onClick={playStation} />

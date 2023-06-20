@@ -1,6 +1,8 @@
 import logoImg from './assets/logo.png';
 import playImg from './assets/play.svg';
 
+import kultowePolskiePrzebojeImg from './assets/playlists/kultowe-polskie-przeboje.jpg';
+
 export interface Song {
   artist: string;
   title: string;
@@ -12,6 +14,7 @@ export interface StationContext {
   song?: Song;
   nextSong?: Song;
   description: string;
+  playlist: string;
   isPlaying: boolean;
   audioRef?: HTMLAudioElement;
   playStation: () => void;
@@ -32,3 +35,7 @@ export const NEXT_SONG_HEADING = 'Następnie zagramy';
 export const SHOW_NEXT_SONG_AFTER_SECONDS = 30;
 export const SHOW_NEXT_SONG_AGAIN_AFTER_SECONDS = 90;
 export const SHOW_PREVIOUSLY_CURRENT_SONG_AFTER_SECONDS = 10;
+
+export const PLAYLIST_COVER_STRATEGY: Record<string, string> = {
+  'Kultowe Polskie Przeboje': kultowePolskiePrzebojeImg,
+};
