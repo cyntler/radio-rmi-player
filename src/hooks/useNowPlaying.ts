@@ -1,11 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
-import useWebSocket from 'react-use-websocket';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
-import { JSON_API_URL, Song, WEBSOCKET_API_URL } from '../models';
+import {
+  JSON_API_URL,
+  SERVER_STATION_NAME,
+  Song,
+  WEBSOCKET_API_URL,
+} from '../models';
 import { ApiResponse } from '../modelsApiResponse';
 
 export const useNowPlaying = () => {
-  const { lastJsonMessage } = useWebSocket<any>(WEBSOCKET_API_URL);
+  const isWebSocketSubscribedRef = useRef(false);
+  const { lastJsonMessage, sendJsonMessage, readyState } =
+    useWebSocket<any>(WEBSOCKET_API_URL);
   const [listenUrl, setListenUrl] = useState('');
   const [description, setDescription] = useState('');
   const [playlist, setPlaylist] = useState('');
@@ -54,12 +61,24 @@ export const useNowPlaying = () => {
   }, []);
 
   useEffect(() => {
+    if (!isWebSocketSubscribedRef.current && readyState === ReadyState.OPEN) {
+      sendJsonMessage({
+        subs: {
+          [`station:${SERVER_STATION_NAME}`]: {},
+        },
+      });
+
+      isWebSocketSubscribedRef.current = true;
+    }
+  }, [readyState, sendJsonMessage]);
+
+  useEffect(() => {
     fetchInitialData();
   }, [fetchInitialData]);
 
   useEffect(() => {
-    if (lastJsonMessage) {
-      setDataFromApi(lastJsonMessage as ApiResponse);
+    if (lastJsonMessage && lastJsonMessage.pub?.data?.np) {
+      setDataFromApi(lastJsonMessage.pub.data.np as ApiResponse);
     }
     // eslint-disable-next-line
   }, [lastJsonMessage]);
