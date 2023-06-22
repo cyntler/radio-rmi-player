@@ -41,7 +41,9 @@ export const Player: FunctionComponent = () => {
   return (
     <PlayerContainer>
       <PlayerCoverContainer>
-        <PlayerCoverInner isNextSongCoverActive={isNextSongShown}>
+        <PlayerCoverInner
+          isNextSongCoverActive={!customPlaylistCover && isNextSongShown}
+        >
           <PlayerCoverImage src={customPlaylistCover ?? song.coverUrl} />
           {!customPlaylistCover && nextSong && (
             <PlayerCoverImage src={nextSong.coverUrl} />
