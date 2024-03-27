@@ -24,5 +24,6 @@ export const BackgroundOverlay = styled.div`
 
   @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 `;
