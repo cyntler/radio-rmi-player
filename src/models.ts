@@ -15,9 +15,15 @@ export interface StationContext {
   nextSong?: Song;
   description: string;
   playlist: string;
-  isPlaying: boolean;
-  audioRef?: HTMLAudioElement;
+  status: PlayerStatus;
+  audioElement?: HTMLAudioElement;
   playStation: () => void;
+}
+
+export enum PlayerStatus {
+  IDLE,
+  LOADING,
+  PLAYING,
 }
 
 export const assets = {
