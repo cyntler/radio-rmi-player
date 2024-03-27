@@ -4,6 +4,7 @@ import { stationContext } from '../contexts/stationContext';
 import {
   CURRENT_SONG_HEADING,
   NEXT_SONG_HEADING,
+  PlayerStatus,
   SHOW_NEXT_SONG_AFTER_SECONDS,
   SHOW_NEXT_SONG_AGAIN_AFTER_SECONDS,
   SHOW_PREVIOUSLY_CURRENT_SONG_AFTER_SECONDS,
@@ -11,8 +12,8 @@ import {
 import { getFullSongName } from '../utils/getFullSongName';
 
 export const usePlayerSongDetails = () => {
-  const { isPlaying, song, nextSong } = useContext(stationContext);
-  const nextSongTimeout = useRef<NodeJS.Timer>();
+  const { status, song, nextSong } = useContext(stationContext);
+  const nextSongTimeout = useRef<NodeJS.Timeout>();
   const [heading, setHeading] = useState(CURRENT_SONG_HEADING);
   const [title, setTitle] = useState('');
 
@@ -34,19 +35,22 @@ export const usePlayerSongDetails = () => {
       clearNextSongTimeout();
 
       if (nextSong) {
-        nextSongTimeout.current = setTimeout(() => {
-          setHeading(NEXT_SONG_HEADING);
-          setTitle(getFullSongName(nextSong.artist, nextSong.title));
-          setTimeout(() => {
-            showCurrentSong();
-            if (!timeout) {
-              showNextSongTimeoutStart(SHOW_NEXT_SONG_AGAIN_AFTER_SECONDS);
-            }
-          }, 1000 * SHOW_PREVIOUSLY_CURRENT_SONG_AFTER_SECONDS);
-        }, 1000 * (timeout || SHOW_NEXT_SONG_AFTER_SECONDS));
+        nextSongTimeout.current = setTimeout(
+          () => {
+            setHeading(NEXT_SONG_HEADING);
+            setTitle(getFullSongName(nextSong.artist, nextSong.title));
+            setTimeout(() => {
+              showCurrentSong();
+              if (!timeout) {
+                showNextSongTimeoutStart(SHOW_NEXT_SONG_AGAIN_AFTER_SECONDS);
+              }
+            }, 1000 * SHOW_PREVIOUSLY_CURRENT_SONG_AFTER_SECONDS);
+          },
+          1000 * (timeout || SHOW_NEXT_SONG_AFTER_SECONDS),
+        );
       }
     },
-    [showCurrentSong, nextSong]
+    [showCurrentSong, nextSong],
   );
 
   useEffect(() => {
@@ -59,13 +63,13 @@ export const usePlayerSongDetails = () => {
   }, [song]);
 
   useEffect(() => {
-    if (isPlaying) {
+    if (status === PlayerStatus.PLAYING) {
       showNextSongTimeoutStart();
       return;
     }
 
     clearNextSongTimeout();
-  }, [isPlaying, showNextSongTimeoutStart]);
+  }, [status, showNextSongTimeoutStart]);
 
   return {
     heading,
