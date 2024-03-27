@@ -1,7 +1,5 @@
 export const audioFade = (audio: HTMLAudioElement, inOut: 'in' | 'out') => {
-  let fadeAudio: NodeJS.Timeout;
-
-  fadeAudio = setInterval(() => {
+  const fadeAudio = setInterval(() => {
     try {
       if (inOut === 'in') {
         audio.volume += 0.2;

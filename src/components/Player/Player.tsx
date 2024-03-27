@@ -20,7 +20,6 @@ import { PlayerDescription } from '../PlayerDescription';
 import { usePlayerSongDetails } from '../../hooks/usePlayerSongDetails';
 import { useCustomPlaylistCover } from '../../hooks/useCustomPlaylistCover';
 import { PlayerStatus } from '../../models';
-import { Audio, Radio } from 'react-loader-spinner';
 
 export const Player: FunctionComponent = () => {
   const { canvasRef } = usePlayerWave();
