@@ -9,5 +9,5 @@ root.render(
   <StrictMode>
     <GlobalStyle />
     <App />
-  </StrictMode>
+  </StrictMode>,
 );

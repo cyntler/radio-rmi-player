@@ -28,15 +28,15 @@ export const LogoLink = styled.a`
   }
 `;
 
-export const LogoImage = styled.img<{ isRotation: boolean }>`
+export const LogoImage = styled.img<{ $isRotation: boolean }>`
   border: 0;
   border-radius: 50%;
   display: inline-block;
   width: 100%;
   height: 100%;
 
-  ${({ isRotation }) =>
-    isRotation &&
+  ${({ $isRotation }) =>
+    $isRotation &&
     css`
       animation-name: ${logoRotationAnimation};
       animation-duration: 30s;
@@ -55,10 +55,26 @@ export const SupportButton = styled.a`
   font-weight: 700;
   display: block;
   text-decoration: none;
-  margin-left: 15px;
   letter-spacing: 1px;
 
   @media (max-width: 600px) {
     font-size: 12px;
+  }
+`;
+
+export const SupportInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  position: relative;
+
+  small {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 400;
+    bottom: -20px;
+    left: 0;
+    color: #ffffff;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 `;

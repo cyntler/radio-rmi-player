@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Audio, AudioProps, Radio, RadioProps } from 'react-loader-spinner';
 
 import { assets } from '../../models';
 
@@ -21,7 +22,7 @@ export const PlayerCoverContainer = styled.div`
   perspective: 1000px;
 `;
 
-export const PlayerCoverInner = styled.div<{ isNextSongCoverActive: boolean }>`
+export const PlayerCoverInner = styled.div<{ $isNextSongCoverActive: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
@@ -29,8 +30,8 @@ export const PlayerCoverInner = styled.div<{ isNextSongCoverActive: boolean }>`
   transition: transform 0.8s;
   transform-style: preserve-3d;
 
-  ${({ isNextSongCoverActive }) =>
-    isNextSongCoverActive &&
+  ${({ $isNextSongCoverActive }) =>
+    $isNextSongCoverActive &&
     css`
       transform: rotateY(180deg);
     `}
@@ -58,8 +59,8 @@ export const PlayerPlayButton = styled.button`
   position: absolute;
   width: 30%;
   height: 30%;
-  max-width: 76px;
-  max-height: 91px;
+  max-width: 100px;
+  max-height: 120px;
   background-color: transparent;
   background-image: url('${assets.play}');
   background-repeat: no-repeat;
@@ -67,8 +68,8 @@ export const PlayerPlayButton = styled.button`
   background-size: contain;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   border: 0;
+  transform: translate(-50%, -50%);
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.3s ease;
@@ -104,19 +105,48 @@ export const PlayerSongName = styled.p`
   }
 `;
 
-export const PlayerWaveCanvas = styled.canvas<{ isVisible: boolean }>`
+export const PlayerWaveCanvas = styled.canvas<{ $isVisible: boolean }>`
   position: absolute;
-  width: 100%;
+  width: calc(100% + 12px);
   height: 100%;
-  left: 0;
+  left: -12px;
   bottom: 0;
   opacity: 0;
   transition: opacity 0.5s ease;
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
-      opacity: 0.3;
+      opacity: 0.2;
       transition: opacity 0.5s ease 1s;
     `}
 `;
+
+export const CornerIconContainer = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 0.7rem;
+  height: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const LoadingIcon = styled(
+  ({ className, ...props }: RadioProps & { className?: string }) => (
+    <Radio wrapperClass={className} {...props} />
+  ),
+)`
+  position: relative;
+  margin-top: -3px;
+  margin-left: 3px;
+`;
+
+export const PlayIcon = styled(
+  ({ className, ...props }: AudioProps & { className?: string }) => (
+    <Audio wrapperClass={className} {...props} />
+  ),
+)``;

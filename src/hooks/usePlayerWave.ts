@@ -2,36 +2,43 @@ import { Wave } from '@foobar404/wave';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { stationContext } from '../contexts/stationContext';
+import { PlayerStatus } from '../models';
 
 export const usePlayerWave = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { audioRef, isPlaying } = useContext(stationContext);
+  const { audioElement, status } = useContext(stationContext);
   const [wave, setWave] = useState<Wave | undefined>();
 
   useEffect(() => {
-    if (audioRef && canvasRef.current && !wave) {
+    if (audioElement && canvasRef.current && !wave) {
       canvasRef.current.width = canvasRef.current.offsetWidth;
       canvasRef.current.height = canvasRef.current.offsetHeight;
 
-      const w = new Wave(audioRef, canvasRef.current);
+      const w = new Wave(audioElement, canvasRef.current);
       w.addAnimation(
         new w.animations.Lines({
           count: 30,
           lineColor: '#ffffff',
-          lineWidth: 3,
-          rounded: true,
-        })
+          lineWidth: 7,
+          bottom: true,
+          mirroredX: true,
+          frequencyBand: 'lows',
+          glow: {
+            color: '#000000',
+            strength: 3,
+          },
+        }),
       );
 
       setWave(w);
     }
-  }, [audioRef, wave, canvasRef]);
+  }, [audioElement, wave, canvasRef]);
 
   useEffect(() => {
-    if (!isPlaying && wave) {
+    if (status === PlayerStatus.IDLE && wave) {
       wave.clearAnimations();
     }
-  }, [isPlaying, wave]);
+  }, [status, wave]);
 
   return {
     canvasRef,

@@ -9,6 +9,9 @@ import {
   PlayerPlayButton,
   PlayerSongName,
   PlayerWaveCanvas,
+  LoadingIcon,
+  PlayIcon,
+  CornerIconContainer,
 } from './Player.style';
 import { updateTitlePrefix } from '../../utils/updateDocumentTitle';
 import { stationContext } from '../../contexts/stationContext';
@@ -16,23 +19,24 @@ import { usePlayerWave } from '../../hooks/usePlayerWave';
 import { PlayerDescription } from '../PlayerDescription';
 import { usePlayerSongDetails } from '../../hooks/usePlayerSongDetails';
 import { useCustomPlaylistCover } from '../../hooks/useCustomPlaylistCover';
+import { PlayerStatus } from '../../models';
 
 export const Player: FunctionComponent = () => {
   const { canvasRef } = usePlayerWave();
   const { title, heading, isNextSongShown } = usePlayerSongDetails();
-  const { listenUrl, isPlaying, playStation, song, nextSong, playlist } =
+  const { listenUrl, status, playStation, song, nextSong, playlist } =
     useContext(stationContext);
 
   const customPlaylistCover = useCustomPlaylistCover(playlist);
 
   useEffect(() => {
-    if (isPlaying) {
+    if (status !== PlayerStatus.IDLE) {
       updateTitlePrefix('Słuchasz');
       return;
     }
 
     updateTitlePrefix('');
-  }, [isPlaying]);
+  }, [status]);
 
   if (!listenUrl || !song) {
     return null;
@@ -40,19 +44,41 @@ export const Player: FunctionComponent = () => {
 
   return (
     <PlayerContainer>
-      <PlayerCoverContainer>
+      <PlayerCoverContainer
+        onContextMenu={
+          import.meta.env.PROD ? (e) => e.preventDefault() : undefined
+        }
+      >
         <PlayerCoverInner
-          isNextSongCoverActive={!customPlaylistCover && isNextSongShown}
+          $isNextSongCoverActive={!customPlaylistCover && isNextSongShown}
         >
           <PlayerCoverImage src={customPlaylistCover ?? song.coverUrl} />
           {!customPlaylistCover && nextSong && (
             <PlayerCoverImage src={nextSong.coverUrl} />
           )}
         </PlayerCoverInner>
-        {!isPlaying ? (
+        {status === PlayerStatus.IDLE ? (
           <PlayerPlayButton onClick={playStation} />
         ) : (
-          <PlayerWaveCanvas ref={canvasRef} isVisible={!isNextSongShown} />
+          <>
+            <CornerIconContainer>
+              <LoadingIcon
+                visible={status === PlayerStatus.LOADING}
+                height="0.5rem"
+                width="0.5rem"
+                colors={['#ffffff', '#ffffff', '#ffffff']}
+                ariaLabel="Wczytywanie"
+              />
+              <PlayIcon
+                visible={status === PlayerStatus.PLAYING}
+                height="0.4rem"
+                width="0.4rem"
+                color="#ffffff"
+                ariaLabel="Odtwarzanie"
+              />
+            </CornerIconContainer>
+            <PlayerWaveCanvas ref={canvasRef} $isVisible={!isNextSongShown} />
+          </>
         )}
       </PlayerCoverContainer>
       <PlayerHeadingText>{heading}</PlayerHeadingText>
